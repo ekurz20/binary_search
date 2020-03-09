@@ -76,7 +76,78 @@ def count_repeats(xs, x):
     >>> count_repeats([3, 2, 1], 4)
     0
     '''
+    alist = xs
+    item = x
+    if alist == []:
+        return 0
+    if len(alist)==1 and alist[0]!=item:
+        return 0
+    if binarySearch(alist,item) == False:
+        return 0
 
+    first = 0
+    last = len(alist)-1
+    if alist[first]==alist[last]:
+        return last-first+1
+    if alist[first]==item and alist[first+1]!=item:
+        return 1
+
+    upper = upperbinarySearch(alist, item)
+    lower = lowerbinarySearch(alist, item)
+    return upper - lower + 1
+
+
+
+
+def upperbinarySearch(alist,item):
+    first = 0
+    last = len(alist)-1
+
+    if alist[last]==item:
+        return last
+    while first<=last:
+        midpoint = (first+last)//2
+        if alist[midpoint] < item & alist[midpoint-1]==item:
+            return midpoint-1
+        else:
+            if item > alist[midpoint]:
+                last = midpoint -1
+            else:
+                first = midpoint+1
+
+def lowerbinarySearch(alist,item):
+    first = 0
+    last = len(alist)-1
+    found = False
+
+    if alist[first]==item:
+        return first
+    while first <= last and not found:
+        midpoint = (first+last)//2
+        if alist[midpoint]>item and alist[midpoint+1]==item:
+            found = True
+            return midpoint + 1
+        else:
+            if item < alist[midpoint]:
+                first = midpoint + 1
+            else:
+                last = midpoint -1
+
+def binarySearch(alist, item):
+    first = 0
+    last = len(alist)-1
+    found = False
+
+    while first <=last and not found:
+        midpoint = (first+last)//2
+        if alist[midpoint]==item:
+            found = True
+        else:
+            if item > alist[midpoint]:
+                last = midpoint -1
+            else:
+                first = midpoint +1
+    return found
 
 def argmin(f, lo, hi, epsilon=1e-3):
     '''

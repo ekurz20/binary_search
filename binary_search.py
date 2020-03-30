@@ -149,7 +149,7 @@ def binarySearch(alist, item):
                 first = midpoint +1
     return found
 
-def argmin(f, lo, hi, epsilon=1e-3):
+def argmin(f, lo, hi, epsilon):
     '''
     Assumes that f is an input function that takes a float as input and returns a float with a unique global minimum,
     and that lo and hi are both floats satisfying lo < hi.
@@ -169,4 +169,19 @@ def argmin(f, lo, hi, epsilon=1e-3):
     >>> argmin(lambda x: (x-5)**2, -20, 0)
     -0.00016935087808430278
     '''
+    f = f
+    epsilon = epsilon
+    hi = hi
+    lo = lo
+    found = False
 
+    while (hi-lo)>epsilon:
+        m1=(hi-lo)/3+lo
+        m2=2*(hi-lo)/3+lo
+        if f(lo)<f(m1):
+            hi=m1
+        elif f(m1)<f(m2):
+            hi = m2
+        elif f(m2)<f(m1):
+            lo = m1
+    return (hi+lo)/2
